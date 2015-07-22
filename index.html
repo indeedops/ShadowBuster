@@ -1,0 +1,74 @@
+<html ng-app="attackerApp">
+
+	<head>
+		<link rel="stylesheet" href="css/leaflet.css" />
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
+		<script src="countries.js"></script>
+		<script src="chance.js"></script>
+		<script src="mock.js"></script>
+		<script src="mock-socket.min.js"></script>
+		<script src="jquery-2.1.4.min.js"></script>
+		<script src="jquery.noisy.min.js"></script>
+		<script src="leaflet.pattern.js"></script>
+		<script src="app.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<link rel="stylesheet" type="text/css" href="css/flag-icon.min.css">
+	</head>
+	 	<div id="map" style='height:100%; position=relative; top: 0; left: 0 '></div>
+		<script src="TileLayer.Grayscale.js"></script>	
+		<script src="drawing.js"></script>
+		<div ng-controller="tableController">
+			<div id="sourceTable" class="sourceTable">
+				<table class="table1">
+					<tr>
+						<th class='th2' colspan="2"> Attack Origins </th>
+					</tr>
+					<tr class="tr2">
+						<td>Country</td>
+						<td>Attacks</td>
+
+					</tr>
+					<tr class="tr2" ng-repeat="topSourceCountry in topSourceCountries">
+						<td><span ng-class="'flag-icon flag-icon-' + getKeys(topSourceCountry)[0]"></span>{{getKeys(topSourceCountry)[0]}}</td>
+						<td>{{topSourceCountry[getKeys(topSourceCountry)[0]]}}</td>
+					</tr>
+				</table>
+			</div>
+			<div id="destinationTable" class="destinationTable">
+				<table class="table1">
+					<tr>
+						<th class='th2' colspan="2"> Hosts attacked </th>
+					</tr>
+					<tr class="tr2">
+						<td>Targets</td>
+						<td>Attacks</td>
+					</tr>
+					<tr class="tr2" ng-repeat="topDestination in topDestinations">
+						<td>{{getKeys(topDestination)[0]}}</td>
+						<td>{{topDestination[getKeys(topDestination)[0]]}}</td>
+					</tr>
+				</table>
+			</div>
+			<div id="attackTable" class="attackTable">
+				<table class="table1">
+					<tr>
+						<th class='th1'>Target</th>
+						<!--<th class='th1'>Severity</th>-->
+						<th class='th1'>Signature</th>
+						<th class='th1'>IP</th>
+						<th class='th1'>Location</th>
+					</tr>
+					<tr class='tr1' ng-repeat="attack in attacks">
+						<td style="width: 5%">{{attack.hostHeader}}</td>
+						<!--<td style="width: 5%">{{attack.severity}}</td>-->
+						<td style="width: 75%">{{attack.signatureName ? attack.signatureName : (attack.subViolation ? attack.subViolation : (attack.attackType ? attack.attackType : attack.violation))}}</td>
+						<td style="width: 5%">{{attack.attackerIP}}</td>
+						<td style="width: 15%"> <span ng-class="'flag-icon flag-icon-' + attack.attackerCountry"></span> {{attack.attackerCity ? attack.attackerCity : attack.attackerCountry}} </td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</body>
+
+</html>
